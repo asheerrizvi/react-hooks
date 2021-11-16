@@ -15,6 +15,11 @@ function Board() {
     () =>
       JSON.parse(window.localStorage.getItem('squares')) || Array(9).fill(null),
   )
+
+  React.useEffect(() => {
+    window.localStorage.setItem('squares', JSON.stringify(squares))
+  }, [squares])
+
   const nextValue = calculateNextValue(squares)
   const winner = calculateWinner(squares)
   let status = calculateStatus(winner, squares, nextValue)
