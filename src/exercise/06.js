@@ -20,6 +20,7 @@ function PokemonInfo({pokemonName}) {
     pokemon: null,
     error: null,
   })
+  const {status, pokemon, error} = state
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
   // 💰 DON'T FORGET THE DEPENDENCIES ARRAY!
@@ -49,19 +50,19 @@ function PokemonInfo({pokemonName}) {
   //   2. pokemonName but no pokemon: <PokemonInfoFallback name={pokemonName} />
   //   3. pokemon: <PokemonDataView pokemon={pokemon} />
 
-  if (state.status === 'rejected') {
+  if (status === 'rejected') {
     return (
       <div role="alert">
         There was an error:{' '}
-        <pre style={{whiteSpace: 'normal'}}>{state.error.message}</pre>
+        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
       </div>
     )
-  } else if (state.status === 'idle') {
+  } else if (status === 'idle') {
     return 'Submit a pokemon'
-  } else if (state.status === 'pending') {
+  } else if (status === 'pending') {
     return <PokemonInfoFallback name={pokemonName} />
-  } else if (state.status === 'resolved') {
-    return <PokemonDataView pokemon={state.pokemon} />
+  } else if (status === 'resolved') {
+    return <PokemonDataView pokemon={pokemon} />
   }
 
   throw new Error('Invalid status!')
